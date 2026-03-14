@@ -139,6 +139,13 @@ Digitization of analog voltage (e.g., from a Pmod potentiometer or internal sens
 *   **Student C (Data Scaler & BCD):** Converting raw ADC data (0–4095) to real voltage (0.0V – 1.0V) or percentages. Converting results to BCD format for display.
 *   **Student D (Visualizer & Alarm):** Displaying the value on the 7-segment display and visualizing signal levels on the 16-LED bar graph. Implementing an alarm (flashing LEDs when a set limit is exceeded).
 
+### 3.18. Custom I2C/SPI Design (3–4 students)
+Advanced integration of a custom external sensor (via Pmod) that is not included in the standard assignments. The goal is to design a complete hardware driver and data processing unit for a specific peripheral (e.g., OLED display, ToF sensor, Compass, or Pressure sensor).
+*   **Student A (Bus Master):** Implementation of the communication protocol (I2C/SPI Master) according to the sensor's datasheet. Handles start/stop conditions, clock generation, and timing requirements.
+*   **Student B (Register Manager):** Logic for sensor initialization and configuration (setting sampling rates, precision, or power modes). Handles the state machine for reading from and writing to specific internal registers.
+*   **Student C (Data Processor):** Conversion of raw binary data from the sensor into human-readable units (e.g., Pressure in hPa, Distance in mm). Implements necessary mathematical operations (scaling, offsets).
+*   **Student D (UI & Visualization):** Integration with the Nexys A7 peripherals. Displays the measured values on the 7-segment display or 16-LED bar graph and handles user input for mode switching.
+
 ---
 
 ## 4. Documentation Requirements (README.md)
