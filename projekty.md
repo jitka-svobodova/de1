@@ -40,6 +40,7 @@ This repository contains documentation and source codes for team projects develo
 
 ---
 
+## 3. Detailed Project Descriptions
 ### 3.1. PWM Breathing LED (1-2 students)
 Instead of simple blinking, students create a module that smoothly changes brightness.
 **Task:** Implement PWM with an adjustable duty cycle controlled by a counter (triangle waveform for "inhale" and "exhale"). [vhdlwhiz.com/pwm-controller/](https://vhdlwhiz.com/pwm-controller/)
