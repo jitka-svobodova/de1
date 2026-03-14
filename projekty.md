@@ -1,157 +1,115 @@
-# Zadání semestrálních projektů VHDL (Nexys A7-50T)
+# VHDL Semester Projects (Nexys A7-50T)
 
-Tento dokument slouží jako podklad pro týmové projekty v jazyce VHDL. Projekty jsou navrženy pro skupiny **2–4 studentů** s celkovou časovou dotací **10 hodin** (5 cvičení po 2 hodinách).
+This repository contains documentation and source codes for team projects developed in VHDL. The projects are designed for groups of **2–4 students** with a total time allocation of **10 hours** (5 lab sessions of 2 hours each).
 
-## 1. Souhrnná tabulka projektů (včetně témat 2024/25)
+## 1. Project Summary Table (2024/25)
 
 
-| Projekt | Studenti | Koncept | VHDL | Čas | Periferie (Nexys A7) | Potřebný modul |
+| Project | Students | Concept | VHDL | Time | Peripherals (Nexys A7) | Required Module |
 | :--- | :---: | :---: | :---: | :---: | :--- | :--- |
-| **1. PWM Breathing LED** | 1–2 | 2 | 2 | 2 | 16x LED, 1x Switch | Čítač |
-| **2. Waveform Gen (Základ)** | 2–4 | 3 | 3 | 4 | 16x LED, Tlačítka | Čítač, Debouncer |
-| **3. Digitální stopky (Lap)** | 2–3 | 2 | 3 | 3 | 8x 7-seg, Tlačítka | Debouncer |
-| **4. Audio Visualizer (PDM)** | 2–3 | 5 | 3 | 4 | MEMS Mikrofon, 16x LED | Čítač |
-| **5. Multi-mode Counter** | 2–3 | 2 | 4 | 3 | 8x 7-seg, Switche | Čítač |
-| **6. RGB Mood Lamp** | 1–2 | 3 | 2 | 2 | RGB LED, Tlačítka | Debouncer |
-| **7. Digitální Trezor** | 2–3 | 4 | 3 | 4 | Switche, 7-seg, Tlačítka | Debouncer |
-| **8. LED Ping-Pong** | 3–4 | 3 | 4 | 5 | 16x LED, Tlačítka | Debouncer |
-| **9. I2C Termostat** | 3–4 | 4 | 4 | 4 | ADT7420 (I2C), 7-seg | I2C, Debouncer |
-| **10. I2C Vodováha** | 2–3 | 4 | 3 | 3 | ADXL362 (SPI/I2C), RGB LED | SPI/I2C Driver |
-| **11. Konfig. Waveform Gen** | 3–4 | 3 | 5 | 5 | 7-seg (Menu), Tlačítka | Čítač, Debouncer |
-| **12. 7-segment Snake** | 3–4 | 4 | 4 | 5 | 8x 7-seg, Tlačítka | Debouncer, Čítač |
-| **13. Hodiny s budíkem**| 2–3 | 2 | 3 | 4 | 7-seg, Tlačítka, Buzzer | Debouncer |
-| **14. UART Tx/Rx s FIFO** | 3–4 | 4 | 4 | 5 | USB-UART Bridge | Čítač |
-| **15. Multi-channel PWM/Servo** | 2–3 | 3 | 3 | 3 | Serva (Pmod), LED | Čítač |
-| **16. Ultrazvuk HS-SR04** | 2–3 | 3 | 3 | 4 | HS-SR04 (Pmod), 7-seg | Debouncer |
-| **17. ADC & filtrace signálu** | 3–4 | 5 | 4 | 5 | XADC, 7-seg/LED | Čítač |
-| **18. Custom I2C/SPI Design** | 3–4 | 5 | 5 | 5 | Pmod senzory | - |
+| **1. PWM Breathing LED** | 1–2 | 2 | 2 | 2 | 16x LED, 1x Switch | Counter |
+| **2. Waveform Gen (Basic)** | 2–4 | 3 | 3 | 4 | 16x LED, Buttons | Counter, Debouncer |
+| **3. Digital Stopwatch (Lap)** | 2–3 | 2 | 3 | 3 | 8x 7-seg, Buttons | Debouncer |
+| **4. Audio Visualizer (PDM)** | 2–3 | 5 | 3 | 4 | MEMS Mic, 16x LED | Counter |
+| **5. Multi-mode Counter** | 2–3 | 2 | 4 | 3 | 8x 7-seg, Switches | Counter |
+| **6. RGB Mood Lamp** | 1–2 | 3 | 2 | 2 | RGB LED, Buttons | Debouncer |
+| **7. Digital Safe** | 2–3 | 4 | 3 | 4 | Switches, 7-seg, Buttons | Debouncer |
+| **8. LED Ping-Pong** | 3–4 | 3 | 4 | 5 | 16x LED, Buttons | Debouncer |
+| **9. I2C Thermostat** | 3–4 | 4 | 4 | 4 | ADT7420 (I2C), 7-seg | I2C, Debouncer |
+| **10. I2C Spirit Level** | 2–3 | 4 | 3 | 3 | ADXL362 (SPI/I2C), RGB LED | SPI/I2C Driver |
+| **11. Config. Waveform Gen** | 3–4 | 3 | 5 | 5 | 7-seg (Menu), Buttons | Counter, Debouncer |
+| **12. 7-segment Snake** | 3–4 | 4 | 4 | 5 | 8x 7-seg, Buttons | Debouncer, Counter |
+| **13. Alarm Clock** | 2–3 | 2 | 3 | 4 | 7-seg, Buttons, Buzzer | Debouncer |
+| **14. UART Tx/Rx with FIFO** | 3–4 | 4 | 4 | 5 | USB-UART Bridge | Counter |
+| **15. Multi-channel PWM/Servo**| 2–3 | 3 | 3 | 3 | Servos (Pmod), LED | Counter |
+| **16. Ultrasound HS-SR04** | 2–3 | 3 | 3 | 4 | HS-SR04 (Pmod), 7-seg | Debouncer |
+| **17. ADC & Signal Filtering** | 3–4 | 5 | 4 | 5 | XADC, 7-seg/LED | Counter |
+| **18. Custom I2C/SPI Design** | 3–4 | 5 | 5 | 5 | Pmod sensors | - |
 
-*Hodnocení: 0 = nejnižší, 5 = nejvyšší náročnost.*
-
----
-
-## 2. Harmonogram realizace (5x 2 hodiny)
-
-1.  **Cvičení 1: Architektura.** Návrh blokového schématu, rozdělení rolí, inicializace Gitu, příprava `.xdc` souboru.
-2.  **Cvičení 2: Unit Design.** Vývoj dílčích modulů ve vlastních větvích (Git branch), simulace v testbenchi.
-3.  **Cvičení 3: Integrace.** Spojení modulů do Top-level entity, syntéza a první testy na HW.
-4.  **Cvičení 4: Tuning.** Debugging, ošetření zákmitů (debouncing), optimalizace kódu a dokumentace.
-5.  **Cvičení 5: Obhajoba.** Předvedení funkčního zařízení a revize kódu.
+*Difficulty Rating: 0 = lowest, 5 = highest.*
 
 ---
 
-## 3. Detailní popisy vybraných projektů
+## 2. Implementation Schedule (5x 2 hours)
 
-### 3.1. PWM Breathing LED (1-2 studenti)
-Místo pouhého blikání studenti vytvoří modul, který plynule mění jas. 
-Úkol: Implementovat PWM s nastavitelnou střídou, kterou řídí čítač (trojúhelníkový průběh pro "nádech" a "výdech"). https://vhdlwhiz.com/pwm-controller/
-*   **Student A (PWM Modul):** Vytvoří PWM modul.
-*   **Student B (Logika + TB):** Řeší logiku pro řízení jasu a testbench.
-
-### 3.2. Waveform Generator (2–4 studenti)
-Tento projekt je ideální pro 4 studenty, protože je skvěle modulární. Každý student odpovídá za jeden typ průběhu a jeden "šéf" zastřešuje integraci.
-*   **Student A:** PWM a Rectangle (nastavitelná střída). https://vhdlwhiz.com/pwm-controller/
-*   **Student B:** Sawtooth a Triangle (lineární inkrementace čítače).
-*   **Student C:** Sine wave (využití Look-Up Table – ROM paměti). https://vhdlwhiz.com/breathing-led-using-sine-wave-stored-in-block-ram/
-*   **Student D (Integrátor):** Top modul, multiplexer, debouncing tlačítek a synchronizace.
-
-### 3.3. Digitální stopky s "Lap" funkcí (2–3 studenti)
-Měření času na setiny sekundy, výstup na 7-segmentový displej.
-*   **Student A:** dělička frekvence
-*   **Student B:** BCD čítače
-*   **Student C:** dekodér pro displej
-
-### 3.4. Audio "Breathing" Visualizer (2–3 studenti)
-LED pásek nebo řada LED reaguje na intenzitu vstupu (jednoduchý komparátor s pilovým průběhem).
-
-### 3.5. Multi-Mode Counter (2–3 studenti)
-8místný čítač, který umí různé režimy: Decimální, Hexadecimální a "Běžící text" (např. HELLO). 8 segmentovek, přepínače pro volbu módu (Hex/Dec), tlačítka pro Reset/Stop.
-*   **Student A:** Modul pro multiplexování displeje (rychlé přepínání anod s frekvencí cca 100 Hz).
-*   **Student B:** Čítač s volitelnou bází (Dec/Hex).
-*   **Student C:** Dekodér znaků (0-F, H, E, L, O).
-
-### 3.6. RGB Mood Lamp (1-2 studenti)
-Plynulé přechody barev (Rainbow effect). Pětisměrné tlačítko ovládá rychlost nebo jas. RGB LED (vyžaduje 3 nezávislá PWM na jednu LED), 16 přepínačů pro "míchání" vlastní barvy v manuálním módu.
-*   **Student A:** Trojité PWM a řízení barvy pomocí složek R, G, B.
-*   **Student B:** FSM (stavový automat), který cykluje mezi barvami duhy
-
-### 3.7. Digitální trezor/kombinační zámek (2–3 studenti)
-Uživatel musí zadat 4místný kód pomocí přepínačů a středového tlačítka. Přepínače (vstup kódu), 7-segment (zobrazuje "----" nebo "OPEN"/"ERR"), LEDky (indikace pokusů).
-*   **Student A:** Debouncer pro tlačítka.
-*   **Student B:** Hlavní FSM (stavy: IDLE, ENTER_1, ENTER_2, ..., UNLOCKED, ALARM).
-*   **Student C:** Správa displeje a indikace.
-
-### 3.8. "Ping-Pong" na 16 LEDkách (3-4 studenti)
-"Míček" (svítící LED) kmitá zleva doprava. Hráč musí včas stisknout levé/pravé tlačítko, aby ho odrazil. Pokud mine, LEDky zablikají (prohra).
-*   **Student A:** Posuvný registr/logika pohybu LED.
-*   **Student B:** Detekce stisku tlačítka v "nárazové zóně".
-*   **Student C:** Čítač skóre a zobrazení na displeji.
-*   **Student D:** Generátor zrychlování (hustota tiků hodin se zvyšuje s každým odrazem).
-
-### 3.9. Digitální Teploměr (I2C + 7-segment) (3-4 studenti)
-Vyčítat teplotu ze senzoru a zobrazovat ji na 7-segmentovém displeji ve stupních Celsia. Přepínače nastavují "cílovou teplotu" a LED indikují topení/chlazení. ADT7420 (přes I2C), 8x 7-segment, LED (stav), 16x Switch (limit).
-*   **Student A:** Integrátor I2C: Nastavení registru senzoru a čtení dat.
-*   **Student B:** Datový procesor: Převod surových dat ze senzoru na stupně (binární na BCD).
-*   **Student C:** Čítač skóre a zobrazení na displeji.
-
-### 3.10. Vodováha (SPI + RGB LED) (2-3 studenti)
-Využití akcelerometru ADXL362 (ten bývá na SPI, ale pokud máte I2C bridge nebo jiný I2C senzor na Pmodu, princip je stejný). Detekovat náklon desky. Podle toho, na jakou stranu se deska nakloní, se rozsvítí odpovídající LED nebo se "přelévá" světlo na řadě 16 LED. Akcelerometr, 16x LED, RGB LED.
-*   **Student A:** I2C Driver: Čtení os X a Y z registru senzoru.
-*   **Student B:** Mapping: Převod hodnoty náklonu na pozici svítící LED (škálování dat).
-*   **Student C:** Visuals: Driver pro LED a RGB efekty.
-
-### 3.11. Konfigurovatelný Waveform Generator (3-4 studenti)
-Generátor (zadání č. 2), ale parametry (amplituda, frekvence, typ průběhu) se nastavují pomocí pětisměrného tlačítka a zobrazují se na displeji jako "menu". Tlačítka (menu), 7-segment (status), 16x LED (vizualizace amplitudy/PWM).
-*   **Student A:** Menu Controller: FSM přepínající mezi módy (Set Freq, Set Type).
-*   **Student B:** Signal Engine: Generátory (Sine, Tri, Saw).
-*   **Student C:** Output Logic: PWM výstup a škálování amplitudy. 
-*   **Student D:** Zobrazení aktuálních hodnot na 7-segmentu. 
-
-### 3.12. 7-segment Snake (3–4 studenti)
-Had obíhá dokola po vnějších segmentech (a, b, c, d, e, f). Pětisměrné tlačítko (středové nebo směrová) slouží k ovládání směru (ve směru / proti směru hodinových ručiček) nebo ke skoku na vnitřní segment (segment g). Na náhodném segmentu se objeví "potrava" (segment bliká). Hráč ji musí "sníst", čímž se had prodlouží (svítí více segmentů za sebou) nebo se zvýší skóre. 8x 7-segmentový displej, pětisměrné tlačítko, 16x LED (zobrazení délky hada nebo binární skóre).
-*   **Student A (Mapper):** Mapování indexů (Student A): Musí vytvořit logiku, která mapuje lineární pozici hada (0–47, protože 8 displejů × 6 obvodových segmentů) na konkrétní anodu a segmenty.
-*   **Student B (Logika):** Herní logika a FSM (Student B): Řeší směr pohybu, kolize a náhodné generování "potravy" (pomocí jednoduchého LFSR registru).
-*   **Student C (Generátor):** Implementuje náhodné generování pozice jídla (LFSR) a čítač skóre. (Pokud jsou 4, tak tento úkol přebere od studenta B)
-*   **Student D (Mux):** Upravuje multiplexer pro zobrazení více segmentů (tělo hada) současně.
-
-### 3.13. Hodiny s budíkem (2-3 studenti)
-Realizace hodin v 24hodinovém formátu (HH:MM:SS) s možností nastavení času a času buzení (alarmu).
-*   **Student A (Timekeeper):** Implementace hlavního čítače času (sekundy, minuty, hodiny) s děličkou z 100MHz kmitočtu desky. Musí ošetřit přetečení (např. po 23:59:59 skok na 00:00:00).
-*   **Student B*** (Control & Alarm): Logika pro nastavení času pomocí tlačítek (přepínání módů: běh/nastavení času/nastavení budíku). Porovnávání aktuálního času s uloženým časem budíku a spouštění bzučáku (PWM signál pro zvuk).
-*   **Student C (Display Driver):** Multiplexované zobrazení času na 8místném sedmisegmentovém displeji (např. HH-MM-SS) včetně blikání oddělovacích segmentů.
-
-### 3.14 UART Controller s FIFO (3–4 studenti)
-Kompletní řadič pro komunikaci s PC přes RS232.
-*   **Student A (Baudrate/Sampling):** Generátor vzorkovacích hodin a detekce start bitu.
-*   **Student B (Rx/Tx FSM):** Stavové automaty pro příjem a vysílání datového rámce.
-*   **Student C (FIFO):** Implementace vyrovnávací paměti pro plynulý tok dat.
-*   **Student D (UI/App):** Logika pro echo-back nebo ovládání LED přes terminál.
-
-### 3.15 Multi-channel PWM / Servo Controller (2–3 studenti)
-Návrh vícekanálového generátoru PWM signálů, který umožňuje nezávislé ovládání jasu LED a pozice servomotorů (úhel 0° až 180°).
-*   **Student A (PWM Core):** Implementace generického PWM modulu s nastavitelným rozlišením. Musí zajistit pevnou periodu 20 ms (50 Hz) vyžadovanou servomotory a přesně definovanou šířku pulzu v rozmezí 1 ms (0°) až 2 ms (180°).
-*   **Student B (Control & Mapping):** Logika pro ovládání parametrů. Přepínače (Switches) volí, které servo/LED se právě ovládá, a tlačítka (Up/Down) plynule mění střídu (duty cycle). Musí implementovat „saturovaný čítač“, aby servo nenaráželo do mechanických dorazů.
-*   **Student C (Multi-channel Interface):** Integrace více instancí PWM modulů do jednoho celku. Zajištění výstupu na Pmod konektory (pro serva) a na RGB LED (pro vizualizaci náklonu/jasu). Zobrazení aktuální střídy nebo úhlu v procentech na 7-segmentovém displeji.
-
-### 3.16 Ultrazvukový dálkoměr HS-SR04 (2–3 studenti)
-Měření vzdálenosti pomocí ultrazvukového senzoru a zobrazení v cm.
-*   **Student A (Trigger):** Generování 10us pulzů pro aktivaci senzoru.
-*   **Student B (Echo):** Měření délky pulzu Echo a výpočet vzdálenosti (převod času na cm).
-*   **Student C (Zobrazení):** Převod binární hodnoty na BCD a zobrazení na 7-segmentovém displeji.
-
-### 3.17 ADC & filtrace signálu (3–4 studenti)
-Digitalizace analogového napětí (např. z potenciometru na Pmod nebo interního senzoru) a následné digitální zpracování pro stabilizaci naměřených hodnot. XADC na Nexys A7 standardně měří v rozsahu 0V až 1V. Pokud budou studenti připojovat externí napětí na piny JXADC, je nutné je upozornit na toto omezení, aby nedošlo k poškození FPGA (při 3.3V).
-*   **Student A (XADC Interface):** Konfigurace a instancování IP jádra XADC v režimu "Sequencer" nebo "Single Channel". Zajištění správného vyčítání 12bitových dat přes rozhraní DRP (Dynamic Reconfiguration Port) nebo AXI4-Lite.
-*   **Student B (Digital Filter):** Implementace digitálního filtru pro odstranění šumu. Ideální je klouzavý průměr (Moving Average) nebo jednoduchý jednopólový IIR filtr (exponenciální vyhlazování). Musí pracovat s pevnou řádovou čárkou (fixed-point).
-*   **Student C (Data Scaler & BCD):** Převod surových dat z ADC (0–4095) na reálné napětí (0.0V – 1.0V) nebo procenta. Převod výsledku do BCD formátu pro zobrazení.
-*   **Student D (Visualizer & Alarm):** Zobrazení hodnoty na 7-segmentovém displeji a vizualizace úrovně signálu na řadě 16 LED (bargraph). Implementace alarmu (blikání LED při překročení nastaveného limitu).
+1.  **Lab 1: Architecture.** Block diagram design, role assignment, Git initialization, `.xdc` file preparation.
+2.  **Lab 2: Unit Design.** Development of individual modules in separate Git branches, testbench simulation.
+3.  **Lab 3: Integration.** Merging modules into the Top-level entity, synthesis, and initial HW testing.
+4.  **Lab 4: Tuning.** Debugging, debouncing, code optimization, and documentation.
+5.  **Lab 5: Defense.** Demonstration of the functional device and code review.
 
 ---
 
-## 4. Požadavky na dokumentaci (README.md)
+## 3. Detailed Project Descriptions
 
-Každý projekt musí v repozitáři obsahovat:
-*   **Blokové schéma:** Grafické znázornění hierarchie modulů a toků signálů.
-*   **Git Flow:** Historie commitů prokazující aktivitu všech členů týmu.
-*   **Simulace:** Screenshot z Vivado simulátoru (Waveform) prokazující funkčnost modulů.
-*   **Resource Report:** Tabulka využití prostředků (LUT, FF) po syntéze.
+### 3.1. PWM Breathing LED (1-2 students)
+Instead of simple blinking, students create a module that smoothly changes brightness.
+**Task:** Implement PWM with an adjustable duty cycle controlled by a counter (triangle waveform for "inhale" and "exhale").
+*   **Student A (PWM Module):** Creates the PWM module.
+*   **Student B (Logic + TB):** Handles brightness control logic and the testbench.
+
+### 3.2. Waveform Generator (2–4 students)
+This project is modular and scales well. Each student is responsible for one waveform type.
+*   **Student A:** PWM and Rectangle (adjustable duty cycle).
+*   **Student B:** Sawtooth and Triangle (linear counter increment).
+*   **Student C:** Sine wave (using Look-Up Table – ROM memory).
+*   **Student D (Integrator):** Top module, multiplexer, button debouncing, and synchronization.
+
+### 3.3. Digital Stopwatch with "Lap" function (2–3 students)
+Time measurement to hundredths of a second, output to a 7-segment display.
+*   **Student A:** Frequency divider and timing logic.
+*   **Student B:** BCD counters and lap memory.
+*   **Student C:** 7-segment display decoder and multiplexer.
+
+### 3.4. Audio "Breathing" Visualizer (2–3 students)
+An LED strip or row of LEDs reacts to input intensity from the onboard MEMS microphone using PDM.
+
+### 3.5. Multi-Mode Counter (2–3 students)
+8-digit counter with various modes: Decimal, Hexadecimal, and "Scrolling text" (e.g., HELLO).
+*   **Student A:** Display multiplexing module (anode switching ~100 Hz).
+*   **Student B:** Counter with selectable base (Dec/Hex).
+*   **Student C:** Character decoder for special symbols (0-F, H, E, L, O).
+
+### 3.6. RGB Mood Lamp (1-2 students)
+Smooth color transitions (Rainbow effect) using three independent PWMs.
+*   **Student A:** Triple PWM and color mixing logic.
+*   **Student B:** FSM cycling through the color spectrum.
+
+### 3.7. Digital Safe / Combination Lock (2–3 students)
+Enter a 4-digit code using switches.
+*   **Student A:** Button debouncer and input handling.
+*   **Student B:** Main FSM (States: IDLE, ENTERING, UNLOCKED, ALARM).
+*   **Student C:** Display driver for status messages ("OPEN", "ERR").
+
+### 3.8. "Ping-Pong" on 16 LEDs (3-4 students)
+A "ball" (lit LED) oscillates. Players must time their button presses to "hit" it back.
+*   **Student A:** Shift register and LED movement logic.
+*   **Student B:** Collision detection in the hit zone.
+*   **Student C:** Score counter and display logic.
+*   **Student D:** Speed generator (frequency increases after each hit).
+
+### 3.9. Digital Thermometer (I2C + 7-segment) (3-4 students)
+Read temperature from the ADT7420 sensor via I2C and display it in Celsius.
+*   **Student A:** I2C Master controller (Read/Write).
+*   **Student B:** Data processor (Raw data to BCD conversion).
+*   **Student C:** Display and alert system (LEDs for overheating).
+
+### 3.10. Spirit Level (SPI + RGB LED) (2-3 students)
+Using the ADXL362 accelerometer to detect board tilt.
+*   **Student A:** SPI/I2C Driver for sensor communication.
+*   **Student B:** Data mapping (Tilt angle to LED position).
+*   **Student C:** Visual effects and RGB feedback.
+
+### 3.11. Configurable Waveform Generator (3-4 students)
+Advanced generator with a menu system on the 7-segment display.
+*   **Student A:** Menu Controller (FSM for parameter selection).
+*   **Student B:** Signal Engine (Sine, Tri, Saw generators).
+*   **Student C:** PWM Output and amplitude scaling.
+*   **Student D:** UI rendering on 7-segment displays.
+
+### 3.12. 7-segment Snake (3–4 students)
+A snake moves around the outer segments of the 8-digit display.
+*   **Student A (Mapper):** Maps linear snake position (0–47) to specific anodes/segments.
+*   **Student B (Logic):** Game FSM, direction control, and collision logic.
+*   **Student C (Generator):** Random "food" generation using LFSR.
+*   **Student D (UI/Score):** Displaying score and managing speed levels.
