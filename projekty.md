@@ -1,6 +1,6 @@
 # VHDL Semester Projects (Nexys A7-50T)
 
-This repository contains documentation and source codes for team projects developed in VHDL. The projects are designed for groups of **2–4 students** with a total time allocation of **10 hours** (5 lab sessions of 2 hours each).
+This repository contains topics for team projects developed in VHDL. The projects are designed for groups of **2–4 students** with a total time allocation of **10 hours** (5 lab sessions of 2 hours each).
 
 ## 1. Project Summary Table (2024/25)
 
